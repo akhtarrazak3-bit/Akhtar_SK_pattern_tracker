@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>⚔️ Pattern Tracker PRO · DHARA</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@500;600;700&family=Exo+2:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #040c14;
+  --bg2: #060f1a;
+  --card: #071220;
+  --card2: #0a1828;
+  --border: #112240;
+  --border2: #1a3a5c;
+  --cyan: #00d4ff;
+  --cyan2: #00aadd;
+  --mint: #00ffa3;
+  --gold: #ffb800;
+  --gold2: #ff8c00;
+  --red: #ff3355;
+  --purple: #9b59ff;
+  --text: #c8e4ff;
+  --muted: #4a7a99;
+  --muted2: #2a4a62;
+  --glow-c: rgba(0,212,255,0.18);
+  --glow-m: rgba(0,255,163,0.15);
+  --glow-g: rgba(255,184,0,0.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 40% at 50% 0%, #0a2545 0%, transparent 70%),
+    radial-gradient(ellipse 60% 30% at 80% 100%, #0a1535 0%, transparent 60%);
+  color: var(--text);
+  font-family: 'Exo 2', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 30px;
+}
+
+#app {
+  width: 100%;
+  max-width: 440px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+/* ── CARDS ── */
+.card {
+  background: linear-gradient(160deg, var(--card2) 0%, var(--card) 100%);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 13px 15px;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.25), transparent);
+  pointer-events: none;
+}
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 30% at 50% 0%, rgba(0,212,255,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── HEADER ── */
+.header {
+  background: linear-gradient(135deg, #0c1e35, #060e1c);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(0,212,255,0.1);
+}
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background:
+    radial-gradient(ellipse 50% 80% at 10% 50%, rgba(0,212,255,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 80% at 90% 50%, rgba(0,255,163,0.04) 0%, transparent 60%);
+  pointer-events: none;
+}
+.hdr-swords {
+  font-size: 22px;
+  filter: drop-shadow(0 0 8px rgba(0,212,255,0.6));
+  animation: swordGlow 3s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes swordGlow {
+  0%,100% { filter: drop-shadow(0 0 6px rgba(0,212,255,0.5)); }
+  50% { filter: drop-shadow(0 0 14px rgba(0,212,255,0.9)); }
+}
+.hdr-center { flex: 1; }
+.hdr-crown { font-size: 14px; display: block; text-align: center; margin-bottom: -3px; filter: drop-shadow(0 0 6px var(--gold)); }
+.hdr-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-align: center;
+  background: linear-gradient(90deg, var(--cyan), #88ffee, var(--mint));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  line-height: 1;
+}
+.hdr-sub {
+  text-align: center;
+  letter-spacing: 4px;
+  font-size: 8px;
+  color: var(--muted);
+  font-weight: 600;
+  margin-top: 3px;
+  text-transform: uppercase;
+}
+.hdr-badge {
+  background: linear-gradient(135deg, var(--cyan), var(--mint));
+  color: #020c16;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 10px;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 8px;
+  letter-spacing: 1px;
+  box-shadow: 0 0 12px rgba(0,212,255,0.4);
+  flex-shrink: 0;
+}
+
+/* ── SECTION LABEL ── */
+.sec-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--cyan);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.sec-lbl-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--mint);
+  box-shadow: 0 0 8px var(--mint);
+  animation: dotPulse 2s ease-in-out infinite;
+}
+@keyframes dotPulse {
+  0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)}
+}
+
+/* ── ACCURACY ── */
+.acc-zone-card {
+  background: linear-gradient(160deg, #071525 0%, #040e1a 100%);
+  border: 1px solid var(--border2);
+  border-radius: 18px;
+  padding: 14px 15px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0,212,255,0.08), inset 0 1px 0 rgba(0,212,255,0.1);
+}
+.acc-zone-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,212,255,0.4), transparent);
+}
+.acc-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.acc-perf-btn {
+  background: rgba(0,212,255,0.07);
+  border: 1px solid rgba(0,212,255,0.2);
+  color: var(--cyan);
+  border-radius: 10px;
+  padding: 5px 11px;
+  font-size: 9.5px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Exo 2', sans-serif;
+  letter-spacing: 0.5px;
+  transition: all 0.2s;
+}
+.acc-perf-btn:hover { background: rgba(0,212,255,0.14); box-shadow: 0 0 10px rgba(0,212,255,0.2); }
+
+.acc-main { display: flex; gap: 14px; align-items: center; }
+
+/* Circular gauge */
+.acc-gauge-wrap {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  flex-shrink: 0;
+}
+.acc-gauge-svg {
+  transform: rotate(-90deg);
+  filter: drop-shadow(0 0 6px rgba(0,255,163,0.3));
+}
+.gauge-bg { fill: none; stroke: rgba(255,255,255,0.04); stroke-width: 8; }
+.gauge-fill {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke: url(#gaugeGrad);
+  stroke-dasharray: 251.2;
+  stroke-dashoffset: 251.2;
+  transition: stroke-dashoffset 0.8s cubic-bezier(0.25,0.8,0.25,1);
+}
+.gauge-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+#acc-pct {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--muted2);
+  line-height: 1;
+}
+.gauge-label { font-size: 7px; color: var(--muted); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+
+/* Acc stats right */
+.acc-stats { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.acc-stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(0,0,0,0.2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 7px 10px;
+}
+.acc-stat-label { font-size: 10px; color: var(--muted); font-weight: 500; display: flex; align-items: center; gap: 5px; }
+.acc-stat-icon { font-size: 12px; }
+.acc-stat-val { font-size: 13px; font-weight: 800; font-family: 'Rajdhani', sans-serif; color: var(--text); }
+
+.acc-badge {
+  margin-top: 8px;
+  background: linear-gradient(90deg, rgba(0,255,163,0.08), rgba(0,212,255,0.08));
+  border: 1px solid rgba(0,255,163,0.25);
+  border-radius: 10px;
+  padding: 7px 12px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--mint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+#acc-warn {
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 7px 12px;
+  border-radius: 10px;
+  display: none;
+  text-align: center;
+  border: 1px solid;
+}
+
+/* ── BETTING PLANNER ── */
+.planner-card {
+  background: linear-gradient(160deg, #0a1428 0%, #060e1c 100%);
+  border: 1px solid var(--border2);
+  border-radius: 18px;
+  padding: 13px 15px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(155,89,255,0.06);
+}
+.planner-card::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(155,89,255,0.4),transparent);
+}
+
+.planner-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+#planner-toggle {
+  background: rgba(155,89,255,0.08);
+  border: 1px solid rgba(155,89,255,0.25);
+  color: var(--purple);
+  border-radius: 10px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'Exo 2', sans-serif;
+  transition: all 0.2s;
+  display: flex; align-items: center; gap: 5px;
+}
+#planner-toggle:hover { background: rgba(155,89,255,0.15); }
+
+#planner-settings {
+  display: none;
+  margin-bottom: 10px;
+  padding: 10px;
+  background: rgba(0,0,0,0.3);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.inp-group label {
+  font-size: 8px;
+  color: var(--muted);
+  letter-spacing: 1.5px;
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.inp-group input {
+  width: 100%;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  padding: 8px 11px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Exo 2', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.inp-group input:focus { border-color: var(--cyan); box-shadow: 0 0 8px rgba(0,212,255,0.15); }
+#apply-btn {
+  width: 100%;
+  background: linear-gradient(90deg, #0a5fff, #5b2dff);
+  color: white;
+  border: none;
+  font-weight: 800;
+  padding: 9px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: 'Exo 2', sans-serif;
+  box-shadow: 0 4px 14px rgba(91,45,255,0.4);
+  transition: all 0.2s;
+}
+#apply-btn:hover { filter: brightness(1.1); }
+
+/* Planner Live stats */
+#planner-live {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.plan-stat {
+  background: rgba(0,0,0,0.25);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 8px 5px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.plan-stat::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,212,255,0.15),transparent);
+}
+.plan-stat-val {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}
+.plan-stat-lbl {
+  font-size: 7px;
+  color: var(--muted);
+  margin-top: 3px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* Auto-Calc */
+.auto-title {
+  text-align: center;
+  color: var(--cyan);
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.rounds-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.round-card {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 9px 4px;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  transition: all 0.25s;
+  position: relative; overflow: hidden;
+}
+.round-card::before {
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 50% 0%, rgba(255,255,255,0.03) 0%, transparent 60%);
+}
+.round-card.active-card {
+  border-color: var(--mint) !important;
+  background: rgba(0,255,163,0.06) !important;
+  box-shadow: 0 0 16px rgba(0,255,163,0.12), inset 0 1px 0 rgba(0,255,163,0.2);
+}
+.rc-badge {
+  font-size: 8px; font-weight: 900; padding: 2px 7px; border-radius: 6px;
+  color: #fff; letter-spacing: 0.5px; font-family: 'Orbitron', sans-serif;
+}
+.rc-badge.r1{background:linear-gradient(135deg,#1565c0,#0d47a1)}
+.rc-badge.r2{background:linear-gradient(135deg,#6a1b9a,#4a148c)}
+.rc-badge.r3{background:linear-gradient(135deg,#e65100,#bf360c)}
+.rc-badge.r4{background:linear-gradient(135deg,#b71c1c,#7f0000)}
+.rc-lbl { font-size: 7px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.rc-val { font-family: 'Rajdhani', sans-serif; font-size: 13px; font-weight: 700; line-height: 1; }
+.rc-val.r1{color:#64b5f6}.rc-val.r2{color:#ce93d8}.rc-val.r3{color:#ffcc80}.rc-val.r4{color:#ef9a9a}
+.rc-total { font-size: 7px; color: var(--muted2); font-weight: 600; }
+
+/* Active round banner */
+#active-round-banner {
+  display: flex; align-items: center;
+  background: rgba(0,212,255,0.04);
+  border: 1px solid rgba(0,212,255,0.12);
+  border-radius: 13px;
+  padding: 9px 12px;
+  gap: 0;
+  margin-bottom: 10px;
+}
+.ar-col { flex: 1; text-align: center; }
+.ar-col:first-child { text-align: left; }
+.ar-col:last-child { text-align: right; }
+.ar-div { width: 1px; height: 30px; background: var(--border2); flex-shrink: 0; }
+.ar-lbl { font-size: 7.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; font-weight: 600; margin-bottom: 2px; }
+.ar-val {
+  font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 900;
+  background: linear-gradient(90deg, var(--cyan), var(--mint));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1;
+}
+.ar-seat { font-family: 'Rajdhani', sans-serif; font-size: 16px; font-weight: 700; color: var(--mint); line-height: 1; }
+
+/* Timer */
+#timer-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 10px; border-top: 1px solid var(--border);
+}
+#timer-display {
+  font-family: 'Orbitron', sans-serif; font-size: 26px; font-weight: 900;
+  color: var(--mint); letter-spacing: 3px;
+  display: flex; align-items: center; gap: 8px;
+  text-shadow: 0 0 12px rgba(0,255,163,0.4);
+}
+#timer-display.paused { color: var(--gold); text-shadow: 0 0 12px rgba(255,184,0,0.4); }
+.timer-btns { display: flex; gap: 6px; }
+.timer-btn, .act-btn {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border2);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 10px; font-weight: 700;
+  font-family: 'Exo 2', sans-serif;
+  transition: all 0.15s;
+}
+.timer-btn:hover { background: rgba(255,255,255,0.08); }
+.end-btn { border-color: rgba(255,51,85,0.3); color: var(--red); }
+.end-btn:hover { background: rgba(255,51,85,0.1); }
+
+/* ── WIN/LOSS ── */
+.seq-card {
+  background: linear-gradient(160deg, #07142a 0%, #040c18 100%);
+  border: 1px solid var(--border2);
+  border-radius: 18px;
+  padding: 13px 15px;
+  position: relative;
+  overflow: hidden;
+}
+.seq-card::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,255,163,0.3),transparent);
+}
+.seq-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+#seq-streak {
+  font-size: 9px; font-weight: 700; padding: 4px 10px; border-radius: 20px;
+  background: rgba(0,255,163,0.08); border: 1px solid rgba(0,255,163,0.2); color: var(--mint);
+}
+#seq-stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 10px; }
+.seq-stat {
+  background: rgba(0,0,0,0.2); border: 1px solid var(--border);
+  border-radius: 12px; padding: 9px 6px; text-align: center;
+}
+.seq-stat-val { font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 700; line-height: 1; }
+.seq-stat-lbl { font-size: 7px; color: var(--muted); margin-top: 3px; text-transform: uppercase; font-weight: 600; }
+#seq-history { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; min-height: 24px; }
+.seq-block { border-radius: 7px; padding: 3px 8px; font-size: 9.5px; font-weight: 700; }
+.seq-block.W { background: rgba(0,255,163,0.1); border: 1px solid rgba(0,255,163,0.3); color: var(--mint); }
+.seq-block.L { background: rgba(255,51,85,0.1); border: 1px solid rgba(255,51,85,0.3); color: var(--red); }
+.seq-arrow { color: var(--muted2); font-size: 11px; }
+
+/* ── LOSS ALERT ── */
+#loss-alert {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  padding: 10px 14px;
+  display: none;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+#loss-alert .la-icon { font-size: 22px; flex-shrink: 0; }
+#loss-msg { font-size: 12px; font-weight: 800; line-height: 1.2; }
+#loss-sub { font-size: 10px; margin-top: 2px; font-weight: 600; opacity: 0.85; }
+
+/* ── PREDICTION BOX ── */
+#pred-box {
+  display: flex; flex-direction: column; align-items: stretch;
+  text-align: center;
+  background: none; border: none; padding: 0; border-radius: 0; gap: 6px;
+}
+
+/* meta bar */
+#pred-meta-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(135deg, #071828, #04101e);
+  border: 1px solid var(--border2);
+  border-radius: 13px;
+  padding: 8px 14px;
+}
+#pred-meta { font-size: 10px; font-weight: 700; color: var(--muted); letter-spacing: 0.5px; }
+.conf-pill-wrap { display: flex; align-items: center; gap: 7px; }
+.conf-track {
+  height: 6px; border-radius: 10px;
+  background: rgba(255,255,255,0.05); width: 80px; overflow: hidden;
+  border: 1px solid var(--border);
+}
+#conf-fill { height: 100%; border-radius: 10px; transition: width 0.5s ease; }
+#conf-pct-lbl { font-size: 9px; font-weight: 800; color: var(--muted); min-width: 32px; font-family: 'Orbitron', sans-serif; }
+
+/* main pred card */
+#pred-main-card {
+  background: linear-gradient(160deg, #091930, #040e1e);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 14px 16px 12px;
+  display: flex; align-items: center; gap: 16px;
+  position: relative; overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(0,212,255,0.08);
+}
+#pred-main-card::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,212,255,0.2),transparent);
+}
+#pred-left {
+  display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 76px;
+}
+#pred-letter {
+  font-family: 'Orbitron', sans-serif; font-size: 56px; font-weight: 900; line-height: 1;
+  animation: pulse 2s ease-in-out infinite;
+}
+#pred-animal { font-size: 11px; font-weight: 600; color: var(--muted); }
+#pred-right { flex: 1; text-align: left; }
+#avoid-lbl {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.8px;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 8px; display: flex; align-items: center; gap: 5px;
+}
+#avoid-lbl .avoid-badge {
+  background: rgba(255,51,85,0.12); border: 1px solid rgba(255,51,85,0.25);
+  color: var(--red); border-radius: 6px; padding: 2px 7px;
+  font-size: 8.5px; font-weight: 800;
+}
+#pred-suggest {
+  background: rgba(0,0,0,0.3);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 8px 12px;
+  display: flex; align-items: center; gap: 5px;
+}
+#pred-suggest .lagao-lbl { font-size: 9px; color: var(--muted); font-weight: 600; }
+
+/* chain box */
+#chain-box {
+  background: rgba(255,184,0,0.04);
+  border: 1px solid rgba(255,184,0,0.2);
+  border-radius: 12px; padding: 8px 13px; display: none;
+}
+#chain-lbl { font-size: 9px; color: var(--gold); margin-bottom: 4px; font-weight: 700; display: flex; align-items: center; gap: 5px; }
+#chain-content { display: flex; align-items: center; gap: 6px; font-size: 10px; flex-wrap: wrap; }
+#chain-letter { font-size: 18px; font-weight: 900; }
+
+/* empty state */
+#pred-empty {
+  background: linear-gradient(160deg, #071828, #04101e);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px; color: var(--muted); font-size: 12px; line-height: 1.8; text-align: center;
+}
+#pred-empty .em-sub { font-size: 10px; color: var(--muted2); margin-top: 4px; display: block; }
+
+/* ── INPUT BUTTONS ── */
+.btn-section-wrap {
+  background: linear-gradient(160deg, #071828, #040e1a);
+  border: 1px solid var(--border2);
+  border-radius: 18px;
+  padding: 12px 13px;
+  position: relative; overflow: hidden;
+}
+.btn-section-wrap::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(0,212,255,0.15),transparent);
+}
+.btn-lbl {
+  text-align: center;
+  font-size: 9px; font-weight: 700; letter-spacing: 2.5px;
+  color: var(--muted2); text-transform: uppercase; margin-bottom: 10px;
+}
+#btn-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.inp-btn {
+  width: 100%; height: 82px;
+  border-radius: 16px;
+  color: white; cursor: pointer; border: 2px solid;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+  transition: transform 0.1s, filter 0.1s, box-shadow 0.2s;
+  position: relative; overflow: hidden;
+}
+.inp-btn::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 50%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.15), transparent);
+  pointer-events: none; border-radius: 14px 14px 0 0;
+}
+.inp-btn:active { transform: scale(0.91); filter: brightness(0.85); }
+.inp-btn .bi { font-size: 20px; line-height: 1; }
+.inp-btn .bl {
+  font-family: 'Orbitron', sans-serif; font-size: 21px; font-weight: 900; line-height: 1;
+}
+.inp-btn .s {
+  font-size: 8.5px; font-weight: 700; font-family: 'Exo 2', sans-serif;
+  opacity: 0.8; text-transform: uppercase; letter-spacing: 1px;
+}
+
+/* ── HISTORY ── */
+.hist-card {
+  background: linear-gradient(160deg, #07142a, #04101e);
+  border: 1px solid var(--border);
+  border-radius: 18px; padding: 12px 14px;
+  position: relative; overflow: hidden;
+}
+.hist-hdr { display: flex; justify-content: space-between; align-items: center; margin-bottom: 9px; }
+#hist-dots { display: flex; flex-wrap: wrap; gap: 5px; min-height: 28px; align-items: center; }
+.dot {
+  width: 28px; height: 28px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 10px; font-family: 'Orbitron', sans-serif;
+  transition: all 0.2s;
+}
+.act-btns { display: flex; gap: 6px; }
+.act-btn { padding: 5px 11px; font-size: 10px; }
+
+/* ── PATTERN GRID ── */
+.pat-card {
+  background: linear-gradient(160deg, #071828, #040e1a);
+  border: 1px solid var(--border);
+  border-radius: 18px; padding: 12px 14px;
+}
+#pat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; margin-top: 9px; }
+.pat-row {
+  background: rgba(0,0,0,0.25); border: 1px solid var(--border);
+  border-radius: 10px; padding: 7px 7px;
+  display: flex; flex-direction: column; gap: 3px; transition: all 0.2s;
+}
+.pat-row.active {
+  background: rgba(0,212,255,0.06) !important;
+  border-color: rgba(0,212,255,0.35) !important;
+  box-shadow: 0 0 10px rgba(0,212,255,0.08);
+}
+.pat-id { font-size: 8px; color: var(--muted2); font-weight: 700; }
+.pat-row.active .pat-id { color: var(--cyan); }
+.pat-seq { display: flex; gap: 1px; flex-wrap: wrap; align-items: center; }
+.pv { font-weight: 900; font-size: 9.5px; }
+.parr { color: var(--border2); font-size: 8px; font-weight: bold; padding: 0 1px; }
+
+/* ── FOOTER ── */
+.footer {
+  text-align: center; padding: 6px 0 4px;
+  border-top: 1px solid var(--border);
+}
+.footer-main { color: var(--muted2); font-size: 10px; }
+.footer-main strong { color: var(--gold); }
+.footer-sub { color: var(--muted2); font-size: 8px; margin-top: 3px; opacity: 0.5; }
+
+/* flash */
+.flash { position: fixed; top:0;left:0;right:0;bottom:0; pointer-events:none; z-index:10; }
+
+/* animations */
+@keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.05);opacity:0.9} }
+@keyframes fadeOut { from{opacity:0.6} to{opacity:0} }
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="flash" class="flash" style="display:none;"></div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="hdr-swords">⚔️</div>
+    <div class="hdr-center">
+      <span class="hdr-crown">👑</span>
+      <div class="hdr-title">PATTERN TRACKER</div>
+      <div class="hdr-sub">· D H A R A ·</div>
+    </div>
+    <div class="hdr-badge">PRO</div>
+  </div>
+
+  <!-- ACCURACY ZONE -->
+  <div class="acc-zone-card">
+    <div class="acc-header">
+      <span class="sec-lbl"><span class="sec-lbl-dot"></span>ACCURACY ZONE</span>
+      <button class="acc-perf-btn">📊 Overall Performance</button>
+    </div>
+    <div class="acc-main">
+      <!-- Circular gauge -->
+      <div class="acc-gauge-wrap">
+        <svg class="acc-gauge-svg" width="100" height="100" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#00d4ff"/>
+              <stop offset="100%" style="stop-color:#00ffa3"/>
+            </linearGradient>
+          </defs>
+          <circle class="gauge-bg" cx="50" cy="50" r="40"/>
+          <circle class="gauge-fill" id="gauge-fill-circle" cx="50" cy="50" r="40"/>
+        </svg>
+        <div class="gauge-center">
+          <div id="acc-pct">—%</div>
+          <div class="gauge-label">ACCURACY</div>
+        </div>
+      </div>
+      <!-- Stats -->
+      <div class="acc-stats">
+        <div class="acc-stat-row">
+          <span class="acc-stat-label"><span class="acc-stat-icon">📋</span> Total Predictions</span>
+          <span class="acc-stat-val" id="pred-count" style="color:var(--cyan)">0</span>
+        </div>
+        <div class="acc-stat-row">
+          <span class="acc-stat-label"><span class="acc-stat-icon">✅</span> Correct</span>
+          <span class="acc-stat-val" id="sahi-count" style="color:var(--mint)">0</span>
+        </div>
+        <div class="acc-stat-row">
+          <span class="acc-stat-label"><span class="acc-stat-icon">❌</span> Wrong</span>
+          <span class="acc-stat-val" id="galat-count" style="color:var(--red)">0</span>
+        </div>
+        <div class="acc-stat-row">
+          <span class="acc-stat-label"><span class="acc-stat-icon">🎯</span> Accuracy</span>
+          <span class="acc-stat-val" id="acc-pct2" style="color:var(--gold)">—</span>
+        </div>
+      </div>
+    </div>
+    <div id="acc-badge" class="acc-badge">
+      🔥 <span id="acc-zone">⏱ 10 bets ka wait karo...</span> 🛡️
+    </div>
+    <div id="acc-warn"></div>
+  </div>
+
+  <!-- BETTING PLANNER -->
+  <div class="planner-card">
+    <div class="planner-hdr">
+      <span class="sec-lbl" style="color:var(--purple)"><span style="width:6px;height:6px;border-radius:50%;background:var(--purple);box-shadow:0 0 8px var(--purple);animation:dotPulse 2s ease-in-out infinite;display:inline-block"></span>BETTING PLANNER</span>
+      <button id="planner-toggle" onclick="toggleSettings()">⚙️ Hide Settings</button>
+    </div>
+
+    <div id="planner-settings">
+      <div class="input-grid">
+        <div class="inp-group">
+          <label>💰 Starting Amount (₹)</label>
+          <input id="in-r1" type="number" value="500"/>
+        </div>
+        <div class="inp-group">
+          <label>🎯 Target Profit (₹)</label>
+          <input id="in-target" type="number" value="500"/>
+        </div>
+      </div>
+      <button id="apply-btn" onclick="applySettings()">✓ APPLY</button>
+    </div>
+
+    <!-- Live Stats 4-col -->
+    <div id="planner-live">
+      <div class="plan-stat">
+        <div id="stat-pl" class="plan-stat-val" style="color:var(--muted)">₹0</div>
+        <div class="plan-stat-lbl">Live P&L</div>
+      </div>
+      <div class="plan-stat">
+        <div id="stat-remaining" class="plan-stat-val" style="color:var(--gold)">₹—</div>
+        <div class="plan-stat-lbl">Remaining</div>
+      </div>
+      <div class="plan-stat">
+        <div id="stat-bets" class="plan-stat-val" style="color:var(--muted)">—</div>
+        <div class="plan-stat-lbl">Bets Left</div>
+      </div>
+      <div class="plan-stat">
+        <div id="stat-eta" class="plan-stat-val" style="color:var(--muted)">—</div>
+        <div class="plan-stat-lbl">ETA</div>
+      </div>
+    </div>
+
+    <!-- Auto Calc -->
+    <div class="auto-title">⚡ AUTO CALCULATION (RECOVERY + PROFIT)</div>
+    <div class="rounds-grid">
+      <div class="round-card active-card" id="card-r1">
+        <span class="rc-badge r1">R1</span>
+        <span class="rc-lbl">Round 1</span>
+        <span class="rc-val r1">₹<span id="v-r1">500</span></span>
+        <span class="rc-lbl">Per Seat</span>
+        <span class="rc-total">₹<span id="t-r1">1,000</span></span>
+      </div>
+      <div class="round-card" id="card-r2">
+        <span class="rc-badge r2">R2</span>
+        <span class="rc-lbl">Round 2</span>
+        <span class="rc-val r2">₹<span id="v-r2">2,000</span></span>
+        <span class="rc-lbl">Per Seat</span>
+        <span class="rc-total">₹<span id="t-r2">4,000</span></span>
+      </div>
+      <div class="round-card" id="card-r3">
+        <span class="rc-badge r3">R3</span>
+        <span class="rc-lbl">Round 3</span>
+        <span class="rc-val r3">₹<span id="v-r3">6,000</span></span>
+        <span class="rc-lbl">Per Seat</span>
+        <span class="rc-total">₹<span id="t-r3">12,000</span></span>
+      </div>
+      <div class="round-card" id="card-r4">
+        <span class="rc-badge r4">R4</span>
+        <span class="rc-lbl">Round 4</span>
+        <span class="rc-val r4">₹<span id="v-r4">18,000</span></span>
+        <span class="rc-lbl">Per Seat</span>
+        <span class="rc-total">₹<span id="t-r4">36,000</span></span>
+      </div>
+    </div>
+
+    <!-- Active Round Banner -->
+    <div id="active-round-banner">
+      <div class="ar-col">
+        <div class="ar-lbl">Active Round</div>
+        <div class="ar-val" id="active-round-val">R1</div>
+      </div>
+      <div class="ar-div"></div>
+      <div class="ar-col">
+        <div class="ar-lbl">Seat 1</div>
+        <div class="ar-seat">₹<span id="deploy-val">500</span></div>
+      </div>
+      <div class="ar-div"></div>
+      <div class="ar-col">
+        <div class="ar-lbl">Seat 2</div>
+        <div class="ar-seat">₹<span id="deploy-val2">500</span></div>
+      </div>
+    </div>
+
+    <!-- Timer -->
+    <div id="timer-row">
+      <div id="timer-display">
+        <span>⏱</span>
+        <span id="timer-text">00:00</span>
+      </div>
+      <div class="timer-btns">
+        <button class="timer-btn" id="pause-btn" onclick="togglePause()">⏸ Pause</button>
+        <button class="timer-btn end-btn" onclick="endSession()">⏹ End</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- WIN/LOSS SEQUENCE -->
+  <div class="seq-card">
+    <div class="seq-hdr">
+      <span class="sec-lbl" style="color:var(--mint)">📈 Win / Loss Sequence</span>
+      <div id="seq-streak">— Abhi data nahi</div>
+    </div>
+    <div id="seq-stats-row">
+      <div class="seq-stat">
+        <div id="stat-longest" class="seq-stat-val" style="color:var(--mint)">—</div>
+        <div class="seq-stat-lbl">Max Win Streak</div>
+      </div>
+      <div class="seq-stat">
+        <div id="stat-avg" class="seq-stat-val" style="color:var(--cyan)">—</div>
+        <div class="seq-stat-lbl">Avg Win Streak</div>
+      </div>
+      <div class="seq-stat">
+        <div id="stat-wl" class="seq-stat-val">—</div>
+        <div class="seq-stat-lbl">W / L Total</div>
+      </div>
+    </div>
+    <div id="seq-history">
+      <span style="color:var(--muted2);font-size:10px;">Predictions ke baad dikhega...</span>
+    </div>
+  </div>
+
+  <!-- LOSS ALERT -->
+  <div id="loss-alert">
+    <div class="la-icon">⚠️</div>
+    <div class="la-text">
+      <div id="loss-msg"></div>
+      <div id="loss-sub"></div>
+    </div>
+  </div>
+
+  <!-- PREDICTION BOX -->
+  <div id="pred-box">
+    <div id="pred-empty">
+      🔍 Aur results daalo
+      <span class="em-sub">Pattern detect hoga tab prediction aayegi</span>
+    </div>
+    <div id="pred-content" style="display:none; flex-direction:column; gap:6px;">
+      <div id="pred-meta-bar">
+        <span id="pred-meta"></span>
+        <div class="conf-pill-wrap">
+          <div class="conf-track"><div id="conf-fill"></div></div>
+          <span id="conf-pct-lbl">0%</span>
+        </div>
+      </div>
+      <div id="pred-main-card">
+        <div id="pred-left">
+          <div id="pred-letter"></div>
+          <div id="pred-animal"></div>
+        </div>
+        <div id="pred-right">
+          <div id="avoid-lbl">Mat Lagao ❌</div>
+          <div id="pred-suggest"></div>
+        </div>
+      </div>
+      <div id="chain-box">
+        <div id="chain-lbl">⚡ 100% Confirm — Chain Check:</div>
+        <div id="chain-content">
+          <span style="color:var(--muted);">Next mat lagao →</span>
+          <span id="chain-letter"></span>
+          <span id="chain-suggest" style="color:white;font-size:10px;"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INPUT BUTTONS -->
+  <div class="btn-section-wrap">
+    <div class="btn-lbl">🎮 Game Result Daalo</div>
+    <div id="btn-row">
+      <button class="inp-btn" id="btn-A" onclick="addResult('A')">
+        <span class="bi">🐂</span>
+        <span class="bl">A</span>
+        <span class="s">Bull</span>
+      </button>
+      <button class="inp-btn" id="btn-B" onclick="addResult('B')">
+        <span class="bi">🐯</span>
+        <span class="bl">B</span>
+        <span class="s">Tiger</span>
+      </button>
+      <button class="inp-btn" id="btn-C" onclick="addResult('C')">
+        <span class="bi">🦌</span>
+        <span class="bl">C</span>
+        <span class="s">Deer</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- HISTORY -->
+  <div class="hist-card">
+    <div class="hist-hdr">
+      <span class="sec-lbl">🕒 <span id="hist-count">History (0)</span></span>
+      <div class="act-btns">
+        <button class="act-btn" onclick="undo()">↩ Undo</button>
+        <button class="act-btn" onclick="resetAll()">🔄 Reset</button>
+      </div>
+    </div>
+    <div id="hist-dots"><span style="color:var(--muted2);font-size:10px;">Abhi kuch nahi...</span></div>
+  </div>
+
+  <!-- PATTERNS -->
+  <div class="pat-card">
+    <span class="sec-lbl">🧠 Stored Patterns (14)</span>
+    <div id="pat-grid"></div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="footer-main">⚔️ Developed by <strong>Akhtar</strong> · DHARA Technologies</div>
+    <div class="footer-sub">Pattern only — no guarantee of outcome</div>
+  </div>
+</div>
+
+<script>
+const PATTERNS=[
+  {id:"P1 →",seq:["A","B","B","C"]},{id:"P1 ←",seq:["C","B","B","A"]},
+  {id:"P2 →",seq:["A","A","C"]},{id:"P2 ←",seq:["C","C","A"]},
+  {id:"P3 →",seq:["A","B","A","C"]},{id:"P3 ←",seq:["C","B","C","A"]},
+  {id:"P4 →",seq:["A","A","B"]},{id:"P4 ←",seq:["C","C","B"]},
+  {id:"P5 →",seq:["B","B","C","A"]},{id:"P5 ←",seq:["B","B","A","C"]},
+  {id:"P6 →",seq:["A","B","C"]},{id:"P6 ←",seq:["C","B","A"]},
+  {id:"P7 →",seq:["B","C","A","B"]},{id:"P7 ←",seq:["B","A","C","B"]},
+];
+const C={A:"#e8a020",B:"#2ea84a",C:"#2080d0"};
+const G={A:"#e8a02050",B:"#2ea84a50",C:"#2080d050"};
+const AN={A:"Bull 🐂",B:"Tiger 🐯",C:"Deer 🦌"};
+
+let history=[],pendingAvoid=null;
+let totalPred=0,correctPred=0,consecLoss=0;
+let sequences=[],curSeq=null,totalPL=0;
+let betConfig={r1:500,r2:2000,r3:6000,r4:18000,target:500};
+let timerElapsed=0,timerRunning=false,timerStarted=false,timerInterval=null,timerRefTime=0;
+
+["A","B","C"].forEach(v=>{
+  const b=document.getElementById("btn-"+v);
+  if(b){
+    b.style.background=`radial-gradient(circle at 40% 25%,${C[v]}dd,${C[v]}99)`;
+    b.style.borderColor=C[v];
+    b.style.boxShadow=`0 6px 20px ${G[v]},inset 0 1px 0 rgba(255,255,255,0.2)`;
+  }
+});
+
+function analyze(hist){
+  let best={pattern:null,depth:0,next:null};
+  for(const p of PATTERNS){
+    for(let d=Math.min(p.seq.length-1,hist.length);d>=1;d--){
+      if(hist.slice(-d).join(",")===p.seq.slice(0,d).join(",")){
+        if(d>best.depth)best={pattern:p,depth:d,next:p.seq[d]};
+        break;
+      }
+    }
+  }
+  return best;
+}
+function analyzeDouble(hist){
+  const primary=analyze(hist);
+  let secondary=null;
+  if(primary.next&&primary.depth===primary.pattern.seq.length-1)
+    secondary=analyze([...hist,primary.next]);
+  return{primary,secondary};
+}
+function toggleSettings(){
+  const s=document.getElementById("planner-settings");
+  const btn=document.getElementById("planner-toggle");
+  if(s.style.display==="none"||s.style.display===""){
+    s.style.display="block";btn.textContent="⚙️ Hide Settings";
+  } else {
+    s.style.display="none";btn.textContent="⚙️ Show Settings";
+  }
+}
+function applySettings(){
+  const base=+document.getElementById("in-r1").value||500;
+  betConfig={r1:base,r2:Math.round(base*4),r3:Math.round(base*4*3.75),r4:Math.round(base*4*3.75*3),target:+document.getElementById("in-target").value||500};
+  document.getElementById("v-r1").textContent=betConfig.r1.toLocaleString("en-IN");
+  document.getElementById("t-r1").textContent=(betConfig.r1*2).toLocaleString("en-IN");
+  document.getElementById("v-r2").textContent=betConfig.r2.toLocaleString("en-IN");
+  document.getElementById("t-r2").textContent=(betConfig.r2*2).toLocaleString("en-IN");
+  document.getElementById("v-r3").textContent=betConfig.r3.toLocaleString("en-IN");
+  document.getElementById("t-r3").textContent=(betConfig.r3*2).toLocaleString("en-IN");
+  document.getElementById("v-r4").textContent=betConfig.r4.toLocaleString("en-IN");
+  document.getElementById("t-r4").textContent=(betConfig.r4*2).toLocaleString("en-IN");
+  document.getElementById("planner-settings").style.display="none";
+  document.getElementById("planner-toggle").textContent="⚙️ Show Settings";
+  renderPlanner();
+}
+function startTimer(){
+  if(timerRunning)return;
+  timerRunning=true;timerRefTime=Date.now()-timerElapsed*1000;
+  timerInterval=setInterval(()=>{timerElapsed=Math.floor((Date.now()-timerRefTime)/1000);updateTimerDisplay();},1000);
+}
+function togglePause(){
+  const btn=document.getElementById("pause-btn"),disp=document.getElementById("timer-display");
+  if(timerRunning){clearInterval(timerInterval);timerRunning=false;btn.textContent="▶ Resume";btn.classList.add("active");disp.classList.add("paused");}
+  else{startTimer();btn.textContent="⏸ Pause";btn.classList.remove("active");disp.classList.remove("paused");}
+}
+function endSession(){
+  clearInterval(timerInterval);timerRunning=false;timerElapsed=0;timerStarted=false;
+  document.getElementById("timer-text").textContent="00:00";
+  document.getElementById("timer-display").classList.remove("paused");
+  document.getElementById("pause-btn").textContent="⏸ Pause";
+  document.getElementById("pause-btn").classList.remove("active");
+}
+function updateTimerDisplay(){
+  const m=Math.floor(timerElapsed/60),s=timerElapsed%60;
+  document.getElementById("timer-text").textContent=String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+}
+function getCurrentRound(){
+  if(consecLoss===0)return{n:1,amount:betConfig.r1};
+  if(consecLoss===1)return{n:2,amount:betConfig.r2};
+  if(consecLoss===2)return{n:3,amount:betConfig.r3};
+  return{n:4,amount:betConfig.r4};
+}
+function renderPlanner(){
+  const round=getCurrentRound();
+  const remaining=betConfig.target-totalPL;
+  const avg=totalPred>0?totalPL/totalPred:round.amount*0.9*0.72-round.amount*2*0.28;
+  const estBets=avg>0?Math.ceil(remaining/avg):999;
+  const etaMin=Math.ceil(estBets*35/60);
+  document.querySelectorAll('.round-card').forEach(c=>c.classList.remove('active-card'));
+  const ac=document.getElementById("card-r"+round.n);
+  if(ac)ac.classList.add('active-card');
+  const plEl=document.getElementById("stat-pl");
+  plEl.textContent=(totalPL>=0?"₹+":"₹")+Math.round(totalPL).toLocaleString("en-IN");
+  plEl.style.color=totalPL>0?"#00ffa3":totalPL<0?"#ff3355":"var(--muted)";
+  const remEl=document.getElementById("stat-remaining");
+  if(remaining<=0){remEl.textContent="🎯 Done!";remEl.style.color="#00ffa3";}
+  else{remEl.textContent="₹"+Math.round(remaining).toLocaleString("en-IN");remEl.style.color="var(--gold)";}
+  document.getElementById("stat-bets").textContent=remaining<=0?"—":estBets>500?"500+":estBets;
+  const etaEl=document.getElementById("stat-eta");
+  etaEl.textContent=remaining<=0?"✅":etaMin>60?Math.floor(etaMin/60)+"h "+etaMin%60+"m":etaMin+"m";
+  document.getElementById("active-round-val").textContent="R"+round.n;
+  document.getElementById("deploy-val").textContent=round.amount.toLocaleString("en-IN");
+  document.getElementById("deploy-val2").textContent=round.amount.toLocaleString("en-IN");
+}
+function updateSequence(isWin){
+  const t=isWin?"W":"L";
+  if(!curSeq){curSeq={type:t,count:1};}
+  else if(curSeq.type===t){curSeq.count++;}
+  else{sequences.push({...curSeq});curSeq={type:t,count:1};}
+}
+function renderSequence(){
+  const all=curSeq?[...sequences,curSeq]:[...sequences];
+  const streakEl=document.getElementById("seq-streak");
+  const histEl=document.getElementById("seq-history");
+  if(!all.length){
+    streakEl.textContent="— Abhi data nahi";
+    histEl.innerHTML='<span style="color:var(--muted2);font-size:10px;">Predictions ke baad dikhega...</span>';
+    document.getElementById("stat-longest").textContent=document.getElementById("stat-avg").textContent=document.getElementById("stat-wl").textContent="—";
+    return;
+  }
+  if(curSeq){
+    streakEl.textContent=curSeq.type==="W"?`🟢 ${curSeq.count}W streak`:`🔴 ${curSeq.count}L streak`;
+    streakEl.style.color=curSeq.type==="W"?"#00ffa3":"#ff3355";
+    streakEl.style.borderColor=curSeq.type==="W"?"rgba(0,255,163,0.3)":"rgba(255,51,85,0.3)";
+    streakEl.style.background=curSeq.type==="W"?"rgba(0,255,163,0.08)":"rgba(255,51,85,0.08)";
+  }
+  const wins=all.filter(s=>s.type==="W");
+  const totalW=wins.reduce((a,s)=>a+s.count,0);
+  const totalL=all.filter(s=>s.type==="L").reduce((a,s)=>a+s.count,0);
+  document.getElementById("stat-longest").textContent=wins.length?Math.max(...wins.map(s=>s.count)):"—";
+  document.getElementById("stat-avg").textContent=wins.length?(totalW/wins.length).toFixed(1):"—";
+  document.getElementById("stat-wl").innerHTML=`<span style="color:#00ffa3">${totalW}W</span>/<span style="color:#ff3355">${totalL}L</span>`;
+  histEl.innerHTML="";
+  all.slice(-14).forEach((s,i,arr)=>{
+    if(i>0){const a=document.createElement("span");a.className="seq-arrow";a.textContent="›";histEl.appendChild(a);}
+    const b=document.createElement("span");b.className=`seq-block ${s.type}`;b.textContent=`${s.count}${s.type}`;histEl.appendChild(b);
+  });
+}
+function renderAccuracy(){
+  const pct=totalPred<10?null:Math.round(correctPred/totalPred*100);
+  const pctEl=document.getElementById("acc-pct");
+  const pctEl2=document.getElementById("acc-pct2");
+  const fill=document.getElementById("gauge-fill-circle");
+  const zone=document.getElementById("acc-zone");
+  const warn=document.getElementById("acc-warn");
+  const badge=document.getElementById("acc-badge");
+  document.getElementById("pred-count").textContent=totalPred;
+  document.getElementById("sahi-count").textContent=correctPred;
+  document.getElementById("galat-count").textContent=totalPred-correctPred;
+
+  const circumference=251.2;
+  if(!pct&&pct!==0){
+    pctEl.textContent="—%";pctEl2.textContent="—";
+    pctEl.style.color="var(--muted2)";
+    fill.style.strokeDashoffset=circumference;
+    zone.textContent="⏱ 10 bets ka wait karo...";
+    warn.style.display="none";
+    badge.style.borderColor="rgba(0,212,255,0.2)";
+    badge.style.color="var(--muted)";
+    return;
+  }
+  const offset=circumference-(pct/100)*circumference;
+  fill.style.strokeDashoffset=offset;
+  pctEl.textContent=pct+"%";
+  pctEl2.textContent=pct+"%";
+
+  if(pct>=90){
+    pctEl.style.color="var(--mint)";
+    zone.textContent="Excellent! Your Accuracy is in Top Zone";
+    zone.style.color="var(--mint)";
+    badge.style.borderColor="rgba(0,255,163,0.3)";
+    badge.style.background="linear-gradient(90deg,rgba(0,255,163,0.08),rgba(0,212,255,0.08))";
+    badge.style.color="var(--mint)";
+    warn.style.display="none";
+  } else if(pct>=60){
+    pctEl.style.color="var(--gold)";
+    zone.textContent="Khel sakte ho — Achha chal raha hai";
+    zone.style.color="var(--gold)";
+    badge.style.borderColor="rgba(255,184,0,0.3)";
+    badge.style.background="rgba(255,184,0,0.06)";
+    badge.style.color="var(--gold)";
+    warn.style.display="none";
+  } else if(pct>=40){
+    pctEl.style.color="#ff7043";
+    zone.textContent="Sochke khelo — Accuracy thodi kam hai";
+    badge.style.color="#ff7043";
+    warn.style.display="block";
+    warn.style.background="rgba(255,112,67,0.08)";
+    warn.style.borderColor="rgba(255,112,67,0.25)";
+    warn.style.color="#ff7043";
+    warn.textContent="⚠️ Accuracy low — chhote bets lagao";
+  } else {
+    pctEl.style.color="var(--red)";
+    zone.textContent="Mat Khelo! Accuracy bahut low hai";
+    badge.style.color="var(--red)";
+    badge.style.borderColor="rgba(255,51,85,0.3)";
+    warn.style.display="block";
+    warn.style.background="rgba(255,51,85,0.08)";
+    warn.style.borderColor="rgba(255,51,85,0.25)";
+    warn.style.color="var(--red)";
+    warn.textContent="🛑 Accuracy bahut low — ruko!";
+  }
+}
+function renderLossAlert(){
+  const box=document.getElementById("loss-alert"),msg=document.getElementById("loss-msg"),sub=document.getElementById("loss-sub");
+  if(consecLoss===0){box.style.display="none";return;}
+  box.style.display="flex";
+  if(consecLoss===1){
+    box.style.borderColor="rgba(255,184,0,0.3)";box.style.background="rgba(255,184,0,0.05)";
+    msg.style.color="var(--gold)";msg.textContent="⚠️ 1 Consecutive Loss";
+    sub.style.color="var(--gold)";sub.textContent="Doosri bet — dhyan se";
+  } else if(consecLoss===2){
+    box.style.borderColor="rgba(255,51,85,0.3)";box.style.background="rgba(255,51,85,0.05)";
+    msg.style.color="var(--red)";msg.textContent="⚠️⚠️ 2 Consecutive Losses";
+    sub.style.color="var(--red)";sub.textContent="Teesri bet — confirm hone wali hai!";
+  } else {
+    box.style.borderColor="rgba(0,255,163,0.3)";box.style.background="rgba(0,255,163,0.07)";
+    msg.style.color="var(--mint)";msg.textContent="🔥 3 Losses — 4th Bet Guaranteed!";
+    sub.style.color="var(--mint)";sub.textContent="Ab zaroor aayega — lagao!";
+  }
+}
+function buildPatGrid(activeId){
+  const grid=document.getElementById("pat-grid");grid.innerHTML="";
+  PATTERNS.forEach(p=>{
+    const row=document.createElement("div");row.className="pat-row"+(p.id===activeId?" active":"");
+    const id=document.createElement("div");id.className="pat-id";id.textContent=p.id;
+    const seq=document.createElement("div");seq.className="pat-seq";
+    p.seq.forEach((v,i)=>{
+      const s=document.createElement("span");s.className="pv";s.style.color=C[v];s.textContent=v;seq.appendChild(s);
+      if(i<p.seq.length-1){const a=document.createElement("span");a.className="parr";a.textContent="›";seq.appendChild(a);}
+    });
+    row.appendChild(id);row.appendChild(seq);grid.appendChild(row);
+  });
+}
+buildPatGrid(null);
+
+function render(){
+  const anonymity=analyzeDouble(history);
+  const{pattern,depth,next}=anonymity.primary;
+  const secondary=anonymity.secondary;
+  const predBox=document.getElementById("pred-box");
+  const predEmpty=document.getElementById("pred-empty");
+  const predContent=document.getElementById("pred-content");
+  const chainBox=document.getElementById("chain-box");
+  if(next){
+    const conf=Math.round(depth/(pattern.seq.length-1)*100);
+    const is100=conf===100;
+    predEmpty.style.display="none";predContent.style.display="flex";
+    document.getElementById("pred-meta").textContent=`${pattern.id}  |  ${depth}/${pattern.seq.length-1}  |  ${conf}%${is100?" ⚡":""}`;
+    const fill=document.getElementById("conf-fill");
+    fill.style.width=conf+"%";fill.style.background=is100?"#ffb800":C[next];
+    document.getElementById("conf-pct-lbl").textContent=conf+"%";
+    document.getElementById("conf-pct-lbl").style.color=is100?"var(--gold)":C[next];
+    document.getElementById("avoid-lbl").textContent=is100?"Aayega (100%) — Mat Lagao ❌":"Mat Lagao ❌";
+    const letter=document.getElementById("pred-letter");
+    letter.textContent=next;letter.style.color=is100?"#ffb800":C[next];
+    letter.style.textShadow=`0 0 30px ${is100?"#ffb80080":C[next]+"80"},0 0 60px ${is100?"#ffb80040":C[next]+"40"}`;
+    document.getElementById("pred-animal").textContent=AN[next];
+    const suggest=document.getElementById("pred-suggest");
+    suggest.innerHTML="<span class='lagao-lbl'>Lagao →</span> "+["A","B","C"].filter(x=>x!==next).map(x=>`<span style="color:${C[x]};font-size:30px;font-weight:900;font-family:'Orbitron',sans-serif;margin:0 4px;text-shadow:0 0 10px ${C[x]}88;">${x}</span>`).join("");
+    if(is100&&secondary&&secondary.next){
+      chainBox.style.display="block";
+      const cl=document.getElementById("chain-letter");cl.textContent=secondary.next;cl.style.color=C[secondary.next];
+      document.getElementById("chain-suggest").innerHTML="("+secondary.pattern.id+") Lagao → "+["A","B","C"].filter(x=>x!==secondary.next).map(x=>`<span style="color:${C[x]};font-weight:bold;">${x}</span>`).join("+");
+    }else chainBox.style.display="none";
+    buildPatGrid(pattern.id);
+  }else{
+    predEmpty.style.display="block";predContent.style.display="none";chainBox.style.display="none";buildPatGrid(null);
+  }
+  document.getElementById("hist-count").textContent=`History (${history.length})`;
+  const hd=document.getElementById("hist-dots");hd.innerHTML="";
+  if(!history.length){hd.innerHTML='<span style="color:var(--muted2);font-size:10px;">Abhi kuch nahi...</span>';}
+  else{history.slice(-28).forEach((v,i,arr)=>{
+    const isL=i===arr.length-1;
+    const d=document.createElement("span");d.className="dot";d.textContent=v;
+    d.style.background=isL?C[v]:C[v]+"22";d.style.border=`1px solid ${C[v]}55`;
+    d.style.color=isL?"white":C[v];
+    if(isL)d.style.boxShadow=`0 0 12px ${C[v]}90`;
+    hd.appendChild(d);
+  });}
+  renderAccuracy();renderLossAlert();renderSequence();renderPlanner();
+}
+function addResult(val){
+  const roundInfo=getCurrentRound();
+  if(pendingAvoid!==null){
+    totalPred++;
+    if(!timerStarted){timerStarted=true;startTimer();}
+    if(val===pendingAvoid){consecLoss++;totalPL-=roundInfo.amount*2;updateSequence(false);}
+    else{correctPred++;consecLoss=0;totalPL+=roundInfo.amount*0.9;updateSequence(true);}
+  }
+  const f=document.getElementById("flash");
+  if(f){f.style.background=C[val]+"12";f.style.display="block";f.style.animation="none";
+    setTimeout(()=>{f.style.animation="fadeOut 0.4s forwards";setTimeout(()=>{f.style.display="none";},400);},10);}
+  history.push(val);
+  const anonymity=analyzeDouble(history);pendingAvoid=anonymity.primary.next;
+  render();
+}
+function undo(){
+  if(history.length>0){history.pop();const a=analyzeDouble(history);pendingAvoid=a.primary.next;render();}
+}
+function resetAll(){
+  history=[];pendingAvoid=null;totalPred=0;correctPred=0;consecLoss=0;
+  sequences=[];curSeq=null;totalPL=0;endSession();render();
+}
+render();
+</script>
+</body>
+</html>
